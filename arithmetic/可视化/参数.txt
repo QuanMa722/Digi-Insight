@@ -1,0 +1,2 @@
+# color: viridis plasma inferno magma RdGy
+# label: o s ^
