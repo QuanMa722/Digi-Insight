@@ -1,30 +1,30 @@
 # -*- coding: utf-8 -*-
-# linear weighting (math.)
+# 线性加权 (math.)
 
 import numpy as np
 import pulp as lp
 
-# Define the LP problem setup (similar to previous example)
+# 定义 LP 问题设置
 prob = lp.LpProblem("Multi-Objective Problem", lp.LpMaximize)
 
-# Decision variables
+# 决定变量
 x1 = lp.LpVariable('x1', lowBound=0, upBound=None, cat='Continuous')
 x2 = lp.LpVariable('x2', lowBound=0, upBound=None, cat='Continuous')
 
-# Objective functions
+# 目标函数
 objective1 = 2 * x1 + 3 * x2
 objective2 = x1 + 2 * x2
 
-# Constraints (same as before)
+# 制约因素
 prob += 0.5 * x1 + 0.25 * x2 <= 8
 prob += 0.2 * x1 + 0.2 * x2 <= 4
 prob += x1 + 5 * x2 <= 72
 prob += x1 + x2 >= 10
 
-# Solve the problem for each objective separately
+# 分别解决每个目标的问题
 prob.solve()
 
-# Retrieve the optimal values for each objective
+# 获取每个目标的最优值
 max_obj_value = lp.value(objective1)
 min_obj_value = lp.value(objective2)
 
@@ -42,30 +42,30 @@ print("x2 =", lp.value(x2))
 print("Objective value (Min):", min_obj_value)
 print()
 
-# Finding the Pareto Front using weighted-sum method
-weights = np.linspace(0, 1, 20)  # Generate 20 evenly spaced weights between 0 and 1
+# 用加权求和法寻找帕累托前线
+weights = np.linspace(0, 1, 20)  # 在 0 和 1 之间生成 20 个均匀分布的权重
 pareto_front = []
 
 for w in weights:
-    # Create a new LP problem for each weight combination
+    # 为每个权重组合创建一个新的 LP 问题
     prob_w = lp.LpProblem("Weighted Sum Problem", lp.LpMaximize)
 
-    # Objective function as a weighted sum
+    # 目标函数加权和
     prob_w += w * objective1 + (1 - w) * objective2
 
-    # Add constraints (same as before)
+    # 增加制约因素
     prob_w += 0.5 * x1 + 0.25 * x2 <= 8
     prob_w += 0.2 * x1 + 0.2 * x2 <= 4
     prob_w += x1 + 5 * x2 <= 72
     prob_w += x1 + x2 >= 10
 
-    # Solve the problem
+    # 解决问题
     prob_w.solve()
 
-    # Store the optimal values found
+    # 存储找到的最佳值
     pareto_front.append((lp.value(objective1), lp.value(objective2)))
 
-# Print the Pareto front solutions
-print("Pareto Front Solutions (Objective 1, Objective 2):")
+# 打印帕累托前沿解决方案
+print("帕累托前沿解决方案 (目标1, 目标2):")
 for solution in pareto_front:
     print(f"x1={solution[0]}, x2={solution[1]}")
