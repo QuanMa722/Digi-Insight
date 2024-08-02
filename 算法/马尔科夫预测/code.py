@@ -42,7 +42,7 @@ def predict_daily_distribution(transform_matrix, initial_distribution, n_days):
     return daily_distributions
 
 
-# 预测未来10天的每天状态分布
+# 预测未来30天的每天状态分布
 n_days = 30
 daily_distributions = predict_daily_distribution(transform_matrix, extreme_distribution, n_days)
 for day, distribution in enumerate(daily_distributions):
