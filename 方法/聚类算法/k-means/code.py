@@ -3,6 +3,7 @@
 from sklearn.metrics import silhouette_score
 from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
+import numpy as np
 import matplotlib.pyplot as plt
 
 X, _ = make_blobs(n_samples=300, centers=4, cluster_std=0.60, random_state=0)
@@ -10,7 +11,6 @@ X, _ = make_blobs(n_samples=300, centers=4, cluster_std=0.60, random_state=0)
 silhouette_scores = []
 K_max = 15
 for k in range(2, K_max):
-
     kmeans = KMeans(n_clusters=k, random_state=0)
     kmeans.fit(X)
     score = silhouette_score(X, kmeans.labels_)
@@ -21,27 +21,42 @@ print("-" * 20)
 print(f"The best k-num: {best_k_num}")
 print("-" * 20)
 
+plt.figure(figsize=(10, 5))
+
+# Plot Silhouette scores
+plt.subplot(1, 2, 1)
 plt.plot(range(2, K_max), silhouette_scores, marker='o')
 plt.title('Silhouette Coefficients')
 plt.xlabel('Number of clusters')
 plt.ylabel('Average silhouette score')
 plt.grid()
 
+# Plot clusters with decision boundaries
+plt.subplot(1, 2, 2)
+
+h = 0.02  # step size of the mesh
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
 kmeans = KMeans(n_clusters=best_k_num)
 kmeans.fit(X)
+Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+
+# Put the result into a color plot
+Z = Z.reshape(xx.shape)
+plt.contourf(xx, yy, Z, alpha=0.8, cmap='viridis')
 
 labels = kmeans.predict(X)
-
-plt.figure(figsize=(8, 6))
 for i in range(4):
     plt.scatter(X[labels == i, 0], X[labels == i, 1], cmap='viridis', marker='o', label=f'Cluster {i+1}', edgecolor='k')
 
+# Plot centroids
 centers = kmeans.cluster_centers_
-plt.scatter(centers[:, 0], centers[:, 1], c='black', marker='x', s=200, label='Centroids')
+plt.scatter(centers[:, 0], centers[:, 1], c='black', marker='x', s=100, label='Centroids')
 
-plt.title('K-Means Clustering')
+plt.title('K-Means Clustering with Decision Boundaries')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.legend()
 plt.show()
-
