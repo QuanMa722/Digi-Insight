@@ -43,5 +43,5 @@ mode = stats.mode(data)
 print(f"众数: {mode.mode}，出现次数: {mode.count}")
 
 # 变异系数
-coeff_variation = np.std(data) / np.mean(data) * 100
-print(f"变异系数: {coeff_variation:.2f}%")
+cuff_variation = np.std(data) / np.mean(data) * 100
+print(f"变异系数: {cuff_variation:.2f}%")
