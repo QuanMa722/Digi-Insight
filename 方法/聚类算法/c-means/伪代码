@@ -1,0 +1,19 @@
+输入：数据集 X = {x1, x2, ..., xn}，类别数 k，模糊度指数 m，迭代停止条件
+
+1. 初始化：随机初始化类别中心 C = {c1, c2, ..., ck}
+2. 迭代更新：
+   repeat {
+       // Step 1: 更新隶属度
+       for each data point xi {
+           for each cluster center cj {
+               compute uij using the formula
+           }
+       }
+
+       // Step 2: 更新类别中心
+       for each cluster center cj {
+           compute cj using the formula
+       }
+   } until convergence or maximum iterations
+
+3. 输出：最终的类别中心 C 和每个数据点 xi 到每个类别的隶属度 uij
