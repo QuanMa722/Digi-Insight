@@ -1,0 +1,30 @@
+Input:
+    X: 数据集，包含n个样本，每个样本有d个特征
+    K: 聚类的数目
+    max_iters: 最大迭代次数或收敛条件
+
+Output:
+    centroids: 聚类中心点，共K个
+    clusters: 每个样本所属的聚类标签
+
+1. 随机初始化 K 个聚类中心点 centroids
+   或者通过其他方式选择初始聚类中心点
+
+2. repeat
+       // Step 1: 分配样本到最近的聚类中心点
+       for each sample xi in X {
+           计算样本到所有聚类中心点的距离
+           将样本分配到距离最近的聚类中心点的类别
+       }
+
+       // Step 2: 更新聚类中心点
+       for each cluster centroid cj {
+           计算该聚类所有样本的均值，作为新的聚类中心点 cj
+       }
+
+   // Step 3: 检查收敛条件
+   判断是否满足收敛条件，如聚类中心点变化小于阈值或达到最大迭代次数
+
+3. until convergence or max_iters reached
+
+4. 返回最终的聚类中心点 centroids 和每个样本的聚类标签 clusters
