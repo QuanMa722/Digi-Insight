@@ -140,7 +140,7 @@ ax.scatter(filtered_black_points['f1'], filtered_black_points['f2'], filtered_bl
            label='Filtered Black Points', alpha=0.6)
 
 # 绘制优化后的长方体
-draw_box(ax, optimized_box, color='k', alpha=0.3)
+draw_box(ax, optimized_box, color='k', alpha=1)
 
 # 设置坐标轴标签
 ax.set_xlabel('F1')
