@@ -1,58 +1,94 @@
 # -*- coding: utf-8 -*-
+# 各省经纬度 https://blog.csdn.net/weixin_42060598/article/details/129876634
+# 各城市经纬度 https://blog.csdn.net/wjm901215/article/details/83800447
 
-
-from scipy.optimize import linear_sum_assignment
-from scipy.spatial import distance_matrix
 import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
-import numpy as np
 
 plt.rcParams['font.family'] = 'SimHei'
 plt.rcParams['axes.unicode_minus'] = False
 
-# 各省经纬度 https://blog.csdn.net/weixin_42060598/article/details/129876634
-# 各城市经纬度 https://blog.csdn.net/wjm901215/article/details/83800447
-# 定义中国部分城市的坐标
+# 城市及其坐标
 cities = {
-    '北京': (39.9042, 116.4074),
-    '上海': (31.2304, 121.4737),
-    '广州': (23.1291, 113.2644),
-    '深圳': (22.5431, 114.0579),
-    '成都': (30.5728, 104.0060),
+    '上海': (31.231706, 121.472644),
+    '北京': (39.904989, 116.405285),
+    '深圳': (22.547, 114.085947),
+    '广州': (23.125178, 113.280637),
+    '苏州': (31.299379, 120.619585),
+    '成都': (30.659462, 104.065735),
+    '南京': (32.041544, 118.767413),
+    '无锡': (31.574729, 120.301663),
+    '济南': (36.675807, 117.000923),
+    '重庆': (29.533155, 106.504962),
+    '西安': (34.263161, 108.948024),
+    '呼伦贝尔': (49.215333, 119.758168),
+    '福州': (26.075302, 119.306239),
+    '厦门': (24.490474, 118.11022),
+    '雅安': (29.987722, 103.001033),
+    '丽水': (28.451993, 119.921786),
+    '中山': (22.521113, 113.382391),
+    '武汉': (30.584355, 114.298572),
+    '抚州': (27.98385, 116.358351),
+    '佛山': (23.028762, 113.122717),
+    '杭州': (30.287459, 120.153576),
+    '韶关': (24.801322, 113.591544),
+    '汕头': (23.37102, 116.708463),
+    '三亚': (18.247872, 109.508268),
+    '珠海': (22.255899, 113.552724),
+    '儋州': (19.517486, 109.576782),
+    '南昌': (28.676493, 115.892151),
+    '承德': (40.976204, 117.939152),
+    '百色': (23.897742, 106.616285),
+    '北海': (21.473343, 109.119254),
+    '陵水': (18.505006, 110.037218),
+    '秦皇岛': (39.942531, 119.586579),
+    '郑州': (34.757975, 113.665412),
+    '南宁': (22.82402, 108.320004),
+    '东莞': (23.048884, 113.760234),
+    '万宁': (18.796216, 110.388793),
+    '河源': (23.746266, 114.697802),
+    '江门': (22.590431, 113.094942),
+    '惠州': (23.079404, 114.412599),
+    '金华': (29.089524, 119.649506),
+    '揭阳': (23.543778, 116.355733),
+    '长沙': (28.19409, 112.982279),
+    '宿州': (33.633891, 116.984084),
+    '玉林': (22.63136, 110.154393),
+    '宁波': (29.868388, 121.549792),
+    '哈尔滨': (45.756967, 126.642464),
+    '张家口': (40.811901, 114.884091),
+    '晋中': (37.696495, 112.736465),
+    '周口': (33.620357, 114.649653),
+    '嘉峪关': (39.786529, 98.277304)
 }
+# 获取城市的经纬度
+lats, lons = zip(*cities.values())
 
-# 将坐标转换为 numpy 数组
-city_names = list(cities.keys())
-coords = np.array(list(cities.values()))
-
-# 使用距离矩阵求解 TSP
-dist_matrix = distance_matrix(coords, coords)
-row_ind, col_ind = linear_sum_assignment(dist_matrix)
-
-# 创建 TSP 游览路径
-tsp_path = list(row_ind)
-
-# 使用 Cartopy 绘制
+# 创建一个新的图形
 fig, ax = plt.subplots(figsize=(10, 10), subplot_kw={'projection': ccrs.PlateCarree()})
 
-# 添加地图功能
-ax.add_feature(cfeature.BORDERS)
+# 添加中国地图的特征
 ax.add_feature(cfeature.COASTLINE)
-ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.BORDERS)
+ax.add_feature(cfeature.LAND, edgecolor='black')
 ax.add_feature(cfeature.OCEAN)
 ax.add_feature(cfeature.LAKES, edgecolor='black')
-ax.add_feature(cfeature.RIVERS)
 
-# 绘制城市
+# 设置显示区域以集中在中国
+ax.set_extent([73, 135, 18, 54], crs=ccrs.PlateCarree())
+
+# 绘制城市位置
+ax.scatter(lons, lats, color='red', s=20, transform=ccrs.PlateCarree())  # 使用 scatter 绘制点
 for city, (lat, lon) in cities.items():
-    ax.plot(lon, lat, 'o', color='red', transform=ccrs.PlateCarree())
     ax.text(lon, lat, city, fontsize=12, ha='right', transform=ccrs.PlateCarree())
 
-# 绘制 TSP 路径
-path_coords = np.array([coords[i] for i in tsp_path] + [coords[tsp_path[0]]])  # Include return to start
-path_lon_lat = path_coords[:, [1, 0]]  # Swap for plotting
-ax.plot(path_lon_lat[:, 0], path_lon_lat[:, 1], 'gray', lw=2, transform=ccrs.PlateCarree())
+# 连接点的顺序
+# ax.plot(lons, lats, linestyle='--', marker='o', color='red', transform=ccrs.PlateCarree())
 
-plt.title('中国地图上的 TSP 路径')
+# 添加标题
+plt.title('最令外国游客向往的中国50个城市')
+
+# 显示图形
 plt.show()
+
