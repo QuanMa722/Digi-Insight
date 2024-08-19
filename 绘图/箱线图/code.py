@@ -10,11 +10,8 @@ data = {
 }
 
 df = pd.DataFrame(data)
-
 plt.figure(figsize=(8, 6))
 sns.boxplot(x='Class', y='Score', data=df)
-plt.title('Boxplot of Scores by Class')
-plt.xlabel('Class')
-plt.ylabel('Score')
+
 plt.grid(True)
 plt.show()
