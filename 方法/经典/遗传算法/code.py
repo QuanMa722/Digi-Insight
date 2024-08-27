@@ -1,8 +1,10 @@
-import numpy as np
-from numpy.ma import cos
+# -*- coding: utf-8 -*-
+
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from mpl_toolkits.mplot3d import Axes3D
+from numpy.ma import cos
+import numpy as np
 
 
 DNA_SIZE = 24  # 编码长度
@@ -92,7 +94,6 @@ if __name__ == "__main__":
     pop = np.random.randint(2, size=(POP_SIZE, DNA_SIZE * 2))
 
     for i in range(Iterations):
-        print("-" * i)
         x, y = decodeDNA(pop)
         if 'sca' in locals():
             sca.remove()

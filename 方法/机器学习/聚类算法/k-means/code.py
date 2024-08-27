@@ -3,8 +3,12 @@
 from sklearn.metrics import silhouette_score
 from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
+# 设置字体和负号显示
+plt.rcParams['font.family'] = 'SimHei'
+plt.rcParams['axes.unicode_minus'] = False
 
 X, _ = make_blobs(n_samples=300, centers=4, cluster_std=0.60, random_state=0)
 
@@ -26,9 +30,9 @@ plt.figure(figsize=(10, 5))
 # Plot Silhouette scores
 plt.subplot(1, 2, 1)
 plt.plot(range(2, K_max), silhouette_scores, marker='o')
-plt.title('Silhouette Coefficients')
-plt.xlabel('Number of clusters')
-plt.ylabel('Average silhouette score')
+plt.title('轮廓系数')
+plt.xlabel('聚类数')
+plt.ylabel('平均轮廓分')
 plt.grid()
 
 # Plot clusters with decision boundaries
@@ -55,8 +59,8 @@ for i in range(4):
 centers = kmeans.cluster_centers_
 plt.scatter(centers[:, 0], centers[:, 1], c='black', marker='x', s=100, label='Centroids')
 
-plt.title('K-Means Clustering with Decision Boundaries')
-plt.xlabel('Feature 1')
-plt.ylabel('Feature 2')
+plt.title('带决策边界的 K-Means 聚类法')
+plt.xlabel('特征 1')
+plt.ylabel('特征 2')
 plt.legend()
 plt.show()

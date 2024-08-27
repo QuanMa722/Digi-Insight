@@ -22,6 +22,9 @@ silhouette_avg = silhouette_score(X, y_kmeans)
 calinski_harabasz_avg = calinski_harabasz_score(X, y_kmeans)
 davies_bouldin_avg = davies_bouldin_score(X, y_kmeans)
 
-print(f"轮廓系数 (Silhouette Score): {silhouette_avg:.4f}")
-print(f"Calinski-Harabasz 指数: {calinski_harabasz_avg:.4f}")
-print(f"Davies-Bouldin 指数: {davies_bouldin_avg:.4f}")
+width = 20
+print('-' * 30)
+print(f"{'Silhouette Score:':<{width}}{silhouette_avg:.4f}")
+print(f"{'Calinski-Harabasz:':<{width}}{calinski_harabasz_avg:.4f}")
+print(f"{'Davies-Bouldin:':<{width}}{davies_bouldin_avg:.4f}")
+print('-' * 30)

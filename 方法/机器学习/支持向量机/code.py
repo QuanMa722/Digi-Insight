@@ -1,7 +1,9 @@
-import numpy as np
+# -*- coding: utf-8 -*-
+
+from sklearn.datasets import make_moons
 import matplotlib.pyplot as plt
 from sklearn import svm
-from sklearn.datasets import make_moons
+import numpy as np
 
 # 创建一个合成数据集
 X, y = make_moons(n_samples=1000, noise=0.15, random_state=42)
@@ -28,7 +30,8 @@ plt.contourf(xx, yy, Z, levels=[0, Z.max()], colors='palevioletred', alpha=0.3)
 plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.spring, edgecolors='k')
 
 # 绘制支持向量
-plt.scatter(model.support_vectors_[:, 0], model.support_vectors_[:, 1], facecolors='none', edgecolors='k', s=100, linewidths=1.5)
+plt.scatter(model.support_vectors_[:, 0], model.support_vectors_[:, 1], facecolors='none', edgecolors='k', s=100,
+            linewidths=1.5)
 
 plt.title(f"Support Vector Machine with RBF Kernel and Regularization (C={C})")
 plt.xlabel("Feature 1")

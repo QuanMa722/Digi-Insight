@@ -5,9 +5,9 @@
 """
 
 from sklearn.model_selection import train_test_split, RandomizedSearchCV
-from sklearn.datasets import load_diabetes
-from scipy.stats import uniform, randint
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.datasets import load_diabetes
+from scipy.stats import randint
 
 # 生成示例数据
 data = load_diabetes()

@@ -1,2 +1,2 @@
-# color: viridis plasma inferno magma RdGy
+# camp: viridis flag
 # label: o s ^
