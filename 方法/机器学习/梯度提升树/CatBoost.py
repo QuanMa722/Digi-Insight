@@ -50,9 +50,6 @@ random_search = RandomizedSearchCV(
 # 执行随机搜索
 random_search.fit(X_train, y_train)
 
-# 输出最佳参数
-print(f"最佳参数: {random_search.best_params_}")
-
 # 使用最佳参数的模型进行预测
 best_model = random_search.best_estimator_
 y_pred_scaled = best_model.predict(X_test)
@@ -66,8 +63,8 @@ mae = mean_absolute_error(y_test_original, y_pred_original)
 rmse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
 score = best_model.score(X_test, y_test)
 
-print('-' * 10)
-print("R^2: ", round(score, 4))
-print(f"MAE: {mae:.4f}")
-print(f"RMSE: {rmse:.4f}")
-print('-' * 10)
+print('-' * 13)
+print("R^2:", round(score, 4))
+print("MAE:", round(mae, 4))
+print("RMSE:", round(rmse, 4))
+print('-' * 13)

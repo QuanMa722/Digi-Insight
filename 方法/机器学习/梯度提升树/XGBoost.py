@@ -67,10 +67,10 @@ rmse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
 # 计算模型的R^2分数
 score = best_xgb_model.score(X_test, y_test)
 
-print('-' * 10)
-print("R^2: ", round(score, 4))
-print(f"MAE: {mae:.4f}")
-print(f"RMSE: {rmse:.4f}")
-print('-' * 10)
+print('-' * 13)
+print("R^2:", round(score, 4))
+print("MAE:", round(mae, 4))
+print("RMSE:", round(rmse, 4))
+print('-' * 13)
 
 

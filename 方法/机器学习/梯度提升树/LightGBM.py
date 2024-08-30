@@ -34,8 +34,10 @@ param_dist = {
     'subsample': uniform(0.5, 0.5),
     'colsample_bytree': uniform(0.5, 0.5)
 }
+
 # 创建LightGBM回归器对象
 lgb_reg = lgb.LGBMRegressor()
+
 # 创建RandomizedSearchCV对象
 random_search = RandomizedSearchCV(
     estimator=lgb_reg,  # 需要优化的模型，这里是 LGBMRegressor 实例
@@ -65,11 +67,11 @@ rmse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
 # 计算模型的R^2分数
 score = best_xgb_model.score(X_test, y_test)
 
-print('-' * 10)
-print("R^2: ", round(score, 4))
-print(f"MAE: {mae:.4f}")
-print(f"RMSE: {rmse:.4f}")
-print('-' * 10)
+print('-' * 13)
+print("R^2:", round(score, 4))
+print("MAE:", round(mae, 4))
+print("RMSE:", round(rmse, 4))
+print('-' * 13)
 
 
 
