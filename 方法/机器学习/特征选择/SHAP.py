@@ -5,22 +5,20 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from scipy.stats import randint, uniform
-import matplotlib.pyplot as plt
-import lightgbm as lgb
+import xgboost as xgb
 import pandas as pd
 import numpy as np
 import shap
 
-# 设置字体和负号显示
-plt.rcParams['font.family'] = 'SimHei'
-plt.rcParams['axes.unicode_minus'] = False
-
 # 读取数据
-df = pd.read_excel("data.xlsx", sheet_name='Sheet2')
+df = pd.read_excel("data.xlsx")
 
 # 分离特征和目标变量
-X = df.drop(columns='收盘价')
-y = df['收盘价']
+X = df.drop(columns='target')
+y = df['target']
+
+# 标准化之前保存特征名称
+feature_names = X.columns
 
 # 初始化MinMaxScaler对特征进行归一化
 scaler_X = MinMaxScaler()
@@ -29,6 +27,7 @@ X_scaled = scaler_X.fit_transform(X)
 scaler_y = MinMaxScaler()
 y_scaled = scaler_y.fit_transform(y.values.reshape(-1, 1)).flatten()
 
+# 划分数据
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_scaled, test_size=0.3, random_state=42)
 
 # 定义参数分布
@@ -36,25 +35,26 @@ param_dist = {
     'n_estimators': randint(100, 1000),
     'max_depth': randint(3, 10),
     'learning_rate': uniform(0.01, 0.1),
-    'num_leaves': randint(20, 100),
-    'min_child_samples': randint(1, 20),
+    'gamma': uniform(0, 0.5),
     'subsample': uniform(0.5, 0.5),
     'colsample_bytree': uniform(0.5, 0.5)
 }
 
-# 创建LightGBM回归器对象
-lgb_reg = lgb.LGBMRegressor()
+# 创建XGBoost回归器对象
+xgb_reg = xgb.XGBRegressor()
+
 # 创建RandomizedSearchCV对象
 random_search = RandomizedSearchCV(
-    estimator=lgb_reg,  # 需要优化的模型，这里是 LGBMRegressor 实例
-    param_distributions=param_dist,  # 超参数分布的字典，用于指定要搜索的超参数范围
-    n_iter=100,  # 随机搜索的迭代次数，即从参数分布中随机选择多少组参数组合进行评估
-    cv=5,  # 交叉验证的折数，即将数据划分为 5 份进行交叉验证
-    scoring='r2',  # 评估模型性能的指标，这里使用 R² 评分（决定系数），用于回归任务
-    verbose=1,  # 控制输出的详细程度，1 表示输出一些基本的信息
-    random_state=42,  # 随机种子，用于保证每次运行时的结果一致
-    n_jobs=-1  # 并行运行的作业数，-1 表示使用所有可用的 CPU 核心
+    estimator=xgb_reg,
+    param_distributions=param_dist,
+    n_iter=100,
+    cv=5,
+    scoring='r2',
+    verbose=1,
+    random_state=42,
+    n_jobs=-1
 )
+
 # 执行随机搜索
 random_search.fit(X_train, y_train)
 
@@ -73,17 +73,20 @@ rmse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
 # 计算模型的R^2分数
 score = best_xgb_model.score(X_test, y_test)
 
-print('-' * 10)
+print('-' * 12)
 print("R^2: ", round(score, 4))
-print(f"MAE: {mae:.4f}")
-print(f"RMSE: {rmse:.4f}")
-print('-' * 10)
+print('-' * 12)
+
+# 将标准化后的数据转换为DataFrame，并恢复特征名称
+X_scaled_df = pd.DataFrame(X_scaled, columns=feature_names)
 
 explainer = shap.TreeExplainer(best_xgb_model)
-shap_values = explainer.shap_values(X)  # 传入特征矩阵X，计算SHAP值
+shap_values = explainer.shap_values(X_scaled_df)  # 传入特征矩阵X，计算SHAP值
 
 # 可视化解释
 shap.initjs()
 shap.force_plot(explainer.expected_value, shap_values[0, :], X.iloc[0, :])
-shap.summary_plot(shap_values, X)
-shap.summary_plot(shap_values, X, plot_type="bar", color='#f30070')
+shap.summary_plot(shap_values, X_scaled_df)
+shap.summary_plot(shap_values, X_scaled_df, plot_type="bar", color='#f30070')
+
+
