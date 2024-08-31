@@ -1,22 +1,21 @@
-附件
-├── MyCrawler      // scrapy爬虫项目路径(已爬好)
-│  └── MyCrawler
-│     ├── data
-│     └── spiders
-├── data\ processing    // 数据清洗(已无用)
-│  └── data
-├── demo     // django项目路径
-│  ├── Model  // 模型层，用于封装Item类，以及neo4j和csv的读取
-│  ├── demo   // 用于写页面的逻辑(View)
-│  ├── label_data    // 标注训练集页面的保存路径
-│  │  └── handwork
-│  ├── static    // 静态资源
-│  │  ├── css
-│  │  ├── js
-│  │  └── open-iconic
-│  ├── templates   // html页面
-│  └── toolkit   // 工具库，包括预加载，命名实体识别
-│     └── KNN_predict
-├── KNN_predict    // KNN算法预测标签
-├── dfs_tree_crawler     // 爬取互动百科农业实体树形结构的爬虫
-└── wikidataSpider    //  爬取wiki中的关系
+附件:.
+├─EDA
+│  └─图片
+├─问题一
+│  ├─XGBoost
+│  │  └─__pycache__
+│  ├─图片
+│  └─模型对比
+│      └─__pycache__
+├─问题三
+│  └─图片
+└─问题二
+    ├─CATKM
+    │  └─catboost_info
+    │      ├─learn
+    │      └─tmp
+    └─图片
+
+tree
+tree > tree.txt
+tree /F > tree.txt
