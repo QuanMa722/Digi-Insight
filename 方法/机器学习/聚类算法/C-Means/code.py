@@ -65,6 +65,6 @@ if __name__ == "__main__":
     # 可视化结果
     plt.scatter(X[:, 0], X[:, 1], c=y_pred, s=20, cmap='viridis')
     plt.scatter(cmeans.centers[:, 0], cmeans.centers[:, 1], marker='^', s=100, c='r', label='cluster centers')
-    plt.title('c-means 聚类')
+    plt.title('C-Means 聚类')
     plt.legend()
     plt.show()
