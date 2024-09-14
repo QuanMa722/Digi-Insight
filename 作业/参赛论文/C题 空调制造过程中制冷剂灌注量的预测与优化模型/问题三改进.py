@@ -85,7 +85,7 @@ black_points_in_box = count_points_within_box(optimized_box, X2)
 # 打印红点数和黑点数
 print(f"优化结果下的红点数: {red_points_in_box}")
 print(f"优化结果下的黑点数: {black_points_in_box}")
-print(f"红点占比: {round(red_points_in_box / (red_points_in_box + black_points_in_box) * 100)}%")
+print(f"红点数占比: {round(red_points_in_box / (red_points_in_box + black_points_in_box) * 100)}%")
 
 
 # 在3D图中绘制长方体的函数
