@@ -10,7 +10,7 @@ import numpy as np
 
 # 示例数据：包含缺失值的 DataFrame
 data = {
-    'x': [1, 2, 4, 5],        # x 值
+    'x': [1, 2, 4, 5],         # x 值
     'y': [10, np.nan, 30, 40]  # y 值，其中有一个缺失值
 }
 

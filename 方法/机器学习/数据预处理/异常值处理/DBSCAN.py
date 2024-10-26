@@ -22,7 +22,7 @@ is_outlier = y_pred == -1
 # 绘制散点图
 x = range(len(data))
 plt.scatter(x, data, label='Data Points')
-plt.xlabel('索引',fontsize=12)
+plt.xlabel('索引', fontsize=12)
 plt.ylabel('值', fontsize=12)
 plt.title('DBSCAN异常值散点图', fontsize=14)
 

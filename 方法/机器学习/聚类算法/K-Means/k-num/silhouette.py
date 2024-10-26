@@ -13,18 +13,15 @@ X, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.60, random_state=0)
 
 silhouette_scores = []
 K_max = 15
-for k in range(2, K_max):
 
+for k in range(2, K_max):
     kmeans = KMeans(n_clusters=k, random_state=0)
     kmeans.fit(X)
     score = silhouette_score(X, kmeans.labels_)
     silhouette_scores.append(score)
 
 best_k_num = list(range(2, K_max))[silhouette_scores.index(max(silhouette_scores))]
-
-print("-" * 13)
-print(f"最佳聚类数: {best_k_num}")
-print("-" * 13)
+print(f"The best_k_num: {best_k_num}")
 
 plt.plot(range(2, K_max), silhouette_scores, marker='o')
 plt.title('轮廓系数')
