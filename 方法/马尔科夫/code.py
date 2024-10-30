@@ -22,7 +22,9 @@ def calculate_extreme_distribution(transform_matrix):
 
 
 extreme_distribution = calculate_extreme_distribution(transform_matrix)
+
 print("极限分布:", extreme_distribution)
+print()
 
 
 def predict_daily_distribution(transform_matrix, initial_distribution, n_days, random_factor=0.1):
@@ -44,16 +46,14 @@ def predict_daily_distribution(transform_matrix, initial_distribution, n_days, r
 
 
 # 预测未来30天的每天状态分布
-n_days = 10
+n_days = 30
 daily_distributions = predict_daily_distribution(transform_matrix, extreme_distribution, n_days)
 
 # 输出结果
 for day, distribution in enumerate(daily_distributions):
-    print("-" * 55)
     print(f"第{day + 1}天的预测状态分布:", distribution)
-    print(f"第{day + 1}天预测出现A的概率:", distribution[0])
-    print(f"第{day + 1}天预测出现B的概率:", distribution[1])
-    print(f"第{day + 1}天预测出现C的概率:", distribution[2])
+    # print(f"第{day + 1}天预测出现A的概率:", distribution[0])
+    # print(f"第{day + 1}天预测出现B的概率:", distribution[1])
+    # print(f"第{day + 1}天预测出现C的概率:", distribution[2])
     print(f"第{day + 1}天的预测天气为:", ["A", "B", "C"][np.argmax(distribution)])
-    print("-" * 55)
     print()
