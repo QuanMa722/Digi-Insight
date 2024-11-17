@@ -11,16 +11,16 @@ import numpy as np
 
 # 读取数据
 df = pd.read_excel("data.xlsx")
+
 # 分离特征和目标变量
 X = df.drop(columns='target')
 y = df['target']
 
 # 初始化MinMaxScaler对特征进行归一化
-scaler_X = MinMaxScaler()
-X_scaled = scaler_X.fit_transform(X)
+scaler = MinMaxScaler()
 
-scaler_y = MinMaxScaler()
-y_scaled = scaler_y.fit_transform(y.values.reshape(-1, 1)).flatten()
+X_scaled = scaler.fit_transform(X)
+y_scaled = scaler.fit_transform(y.values.reshape(-1, 1)).flatten()
 
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_scaled, test_size=0.3, random_state=42)
 
@@ -57,20 +57,17 @@ best_xgb_model = random_search.best_estimator_
 y_pred_scaled = best_xgb_model.predict(X_test)
 
 # 逆归一化预测结果和真实值
-y_test_original = scaler_y.inverse_transform(y_test.reshape(-1, 1)).flatten()
-y_pred_original = scaler_y.inverse_transform(y_pred_scaled.reshape(-1, 1)).flatten()
+y_test_original = scaler.inverse_transform(y_test.reshape(-1, 1)).flatten()
+y_pred_original = scaler.inverse_transform(y_pred_scaled.reshape(-1, 1)).flatten()
 
-# 计算MAE和RMSE
+# 计算相关指标
 mae = mean_absolute_error(y_test_original, y_pred_original)
-rmse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
-
-# 计算模型的R^2分数
+r_mse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
 score = best_xgb_model.score(X_test, y_test)
 
-print('-' * 13)
 print("R^2:", round(score, 4))
 print("MAE:", round(mae, 4))
-print("RMSE:", round(rmse, 4))
-print('-' * 13)
+print("RMSE:", round(r_mse, 4))
+
 
 

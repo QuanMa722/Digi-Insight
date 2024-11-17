@@ -4,6 +4,9 @@ from sklearn.metrics import silhouette_score
 from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
+import os
+
+os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
 # 设置字体和负号显示
 plt.rcParams['font.family'] = 'SimHei'
