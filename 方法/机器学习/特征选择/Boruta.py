@@ -22,7 +22,7 @@ y_scaled = scaler.fit_transform(y.values.reshape(-1, 1)).flatten()
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_scaled, test_size=0.3, random_state=42)
 
 # 定义随机森林回归器
-rf_reg = RandomForestRegressor(n_estimators=100, random_state=42)
+rf_reg = RandomForestRegressor()
 
 # 使用Boruta进行特征选择
 boruta = BorutaPy(estimator=rf_reg, n_estimators='auto', random_state=42)
@@ -33,4 +33,4 @@ selected_features = boruta.support_
 
 # 获取被选择的特征的名称
 selected_feature_names = X.columns[selected_features]
-print("Selected features:", selected_feature_names)
+print(f'重要的特征：{list(selected_feature_names)}')

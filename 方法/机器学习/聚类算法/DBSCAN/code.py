@@ -4,6 +4,10 @@ from sklearn.cluster import DBSCAN
 import matplotlib.pyplot as plt
 import numpy as np
 
+# 设置字体和负号显示
+plt.rcParams['font.family'] = 'SimHei'
+plt.rcParams['axes.unicode_minus'] = False
+
 np.random.seed(0)
 X = np.random.randn(300, 2)
 
