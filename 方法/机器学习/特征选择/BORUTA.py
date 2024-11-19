@@ -33,4 +33,4 @@ selected_features = boruta.support_
 
 # 获取被选择的特征的名称
 selected_feature_names = X.columns[selected_features]
-print(f'重要的特征：{list(selected_feature_names)}')
+print(list(selected_feature_names))

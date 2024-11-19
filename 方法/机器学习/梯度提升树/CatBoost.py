@@ -63,8 +63,7 @@ mae = mean_absolute_error(y_test_original, y_pred_original)
 rmse = np.sqrt(mean_squared_error(y_test_original, y_pred_original))
 score = best_model.score(X_test, y_test)
 
-print('-' * 13)
 print("R^2:", round(score, 4))
 print("MAE:", round(mae, 4))
 print("RMSE:", round(rmse, 4))
-print('-' * 13)
+
