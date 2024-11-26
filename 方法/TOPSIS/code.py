@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+
 """
 A  89  3
 B  60  1
 C  74  2
 D  99  4
 """
+
 import numpy as np
 
 # 给定数据矩阵
