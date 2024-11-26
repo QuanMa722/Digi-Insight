@@ -1,4 +1,0 @@
-# plt.rcParams['font.family'] = 'SimHei'
-# plt.rcParams['axes.unicode_minus'] = False
-# camp: viridis flag
-# label: o s ^
