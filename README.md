@@ -1,5 +1,5 @@
 ***
-# So while we train for medals, we aim for so much more.
+# Digi is the method used for data modeling and insight is some modeling application.
 ***
 
 
